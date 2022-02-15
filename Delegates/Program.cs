@@ -28,6 +28,7 @@ namespace Delegates
             Console.WriteLine("1. Abs");
             Console.WriteLine("2. Sqr");
             Console.WriteLine("3. Cube");
+            Console.WriteLine("Если хочешь совмещать - пиши две цифры (Пример: 13 - Abs, Cube)");
         }
         static void PrintMenu()
         {
@@ -39,9 +40,9 @@ namespace Delegates
         static void Main(string[] args)
         {
             OperationMenu();
-            Console.WriteLine("Input your choice : ");
+            Console.WriteLine("Ваш выбор : ");
             Int16 choice = Convert.ToInt16(Console.ReadLine());
-            Console.WriteLine("Input your number : ");
+            Console.WriteLine("Введите Ваше число : ");
             Int32 number = Convert.ToInt32(Console.ReadLine());
             OperBack oper;
 
@@ -50,7 +51,7 @@ namespace Delegates
                 case 1:
                     {
                         PrintMenu();
-                        Console.WriteLine("Input your choice : ");
+                        Console.WriteLine("Ваш выбор : ");
                         Int16 choicePrint = Convert.ToInt16(Console.ReadLine());
                         oper = AbsBack;
                         switch(choicePrint)
@@ -66,9 +67,10 @@ namespace Delegates
                 case 2:
                     {
                         PrintMenu();
-                        Console.WriteLine("Input your choice : ");
+                        Console.WriteLine("Ваш выбор : ");
                         Int16 choicePrint = Convert.ToInt16(Console.ReadLine());
                         oper = SqrBack;
+
                         switch (choicePrint)
                         {
                             case 1: oper(number, Print); break;
@@ -81,9 +83,57 @@ namespace Delegates
                 case 3:
                     {
                         PrintMenu();
-                        Console.WriteLine("Input your choice : ");
+                        Console.WriteLine("Ваш выбор : ");
                         Int16 choicePrint = Convert.ToInt16(Console.ReadLine());
                         oper = CubeBack;
+                        switch (choicePrint)
+                        {
+                            case 1: oper(number, Print); break;
+                            case 2: oper(number, PrintLine); break;
+                            case 3: oper(number, SuperPrint); break;
+                            default: throw new ArgumentOutOfRangeException("Argument out of range");
+                        }
+                        break;
+                    }
+                case 12:
+                    {
+                        PrintMenu();
+                        Console.WriteLine("Ваш выбор : ");
+                        Int16 choicePrint = Convert.ToInt16(Console.ReadLine());
+                        oper = AbsBack;
+                        oper += SqrBack;
+                        switch (choicePrint)
+                        {
+                            case 1: oper(number, Print); break;
+                            case 2: oper(number, PrintLine); break;
+                            case 3: oper(number, SuperPrint); break;
+                            default: throw new ArgumentOutOfRangeException("Argument out of range");
+                        }
+                        break;
+                    }
+                case 13:
+                    {
+                        PrintMenu();
+                        Console.WriteLine("Ваш выбор : ");
+                        Int16 choicePrint = Convert.ToInt16(Console.ReadLine());
+                        oper = AbsBack;
+                        oper += CubeBack;
+                        switch (choicePrint)
+                        {
+                            case 1: oper(number, Print); break;
+                            case 2: oper(number, PrintLine); break;
+                            case 3: oper(number, SuperPrint); break;
+                            default: throw new ArgumentOutOfRangeException("Argument out of range");
+                        }
+                        break;
+                    }
+                case 23:
+                    {
+                        PrintMenu();
+                        Console.WriteLine("Ваш выбор : ");
+                        Int16 choicePrint = Convert.ToInt16(Console.ReadLine());
+                        oper = SqrBack;
+                        oper += CubeBack;
                         switch (choicePrint)
                         {
                             case 1: oper(number, Print); break;
@@ -123,7 +173,6 @@ namespace Delegates
         {
             Console.Write(x);
         }
-
         static void SuperPrint(int x)
         {
             Console.WriteLine($"-=({x})=-");
