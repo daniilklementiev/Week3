@@ -27,7 +27,6 @@ namespace Enums
                 Console.Write(temp + " ");
                 PrintTemp(temp);
             }
-
         }
         private static Directions RandomDirection()
         {
