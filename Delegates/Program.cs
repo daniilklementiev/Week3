@@ -3,7 +3,7 @@
 namespace Delegates
 {
     delegate int Oper(int x);
-    
+
     class Program
     {
         private delegate void Back(int x);
@@ -54,7 +54,7 @@ namespace Delegates
                         Console.WriteLine("Ваш выбор : ");
                         Int16 choicePrint = Convert.ToInt16(Console.ReadLine());
                         oper = AbsBack;
-                        switch(choicePrint)
+                        switch (choicePrint)
                         {
                             case 1: oper(number, Print); break;
                             case 2: oper(number, PrintLine); break;
@@ -63,7 +63,7 @@ namespace Delegates
                         }
                         break;
                     }
-                    
+
                 case 2:
                     {
                         PrintMenu();
@@ -146,7 +146,7 @@ namespace Delegates
                 default: throw new ArgumentOutOfRangeException("Argument out of range");
             }
         }
-        
+
         static int CubeBack(int x, Back callback)
         {
             x = Cube(x);
@@ -167,19 +167,20 @@ namespace Delegates
         }
         static void PrintLine(int x) // это будет Back
         {
-            Console.WriteLine(x);
+            Console.WriteLine($"Answer : {x}");
         }
         static void Print(int x) // это будет Back
         {
-            Console.Write(x);
+            Console.Write($"Answer : {x}");
         }
         static void SuperPrint(int x)
         {
+            Console.WriteLine($"Answer");
             Console.WriteLine($"-=({x})=-");
         }
         static void Main3(string[] args)
         {
-           Back back = Print;
+            Back back = Print;
             /*
              // Массив делегатов "вручную"
              OperBack[] operBack = new OperBack[2];
@@ -190,7 +191,7 @@ namespace Delegates
                  opBack(-10, back);
              }*/
             // делегат в режиме работы с двумя методами
-            OperBack operBack = new (AbsBack);
+            OperBack operBack = new(AbsBack);
             operBack += SqrBack;
             int y = operBack(-10, back);                // через делегат back
             operBack(-10, PrintLine);                   // через прямое
@@ -201,7 +202,7 @@ namespace Delegates
             oper(-10, SuperPrint);
 
         }
-        
+
 
         static void Main2(string[] args)
         {
