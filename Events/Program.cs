@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Events
 {
@@ -19,11 +20,13 @@ namespace Events
             saveModule = new SaveModule();
             var savedTimeModule = new SavedTimeModule();
             var restrictedModule = new CheckerModule();
+            var counterStrings = new CounterStrings();
 
             editModule.NewChar += changeModule.OnNewChar;
             editModule.NewChar += lengthModule.OnNewChar;
             editModule.NewChar += restrictedModule.OnNewChar;
             editModule.NewChar += CounterWords.Counter;
+            editModule.NewChar += counterStrings.Counter;
 
             saveModule.SaveText += changeModule.OnSaved;
             saveModule.SaveText += savedTimeModule.OnSaved;
@@ -36,32 +39,28 @@ namespace Events
     class EditModule
     {
         public event EventListener NewChar = null!;
-        Program pr = new Program();
         public void Type()
         {
             String str = String.Empty;
+            MatchCollection lines = Regex.Matches(str, "\n"); // регулярное выражение для подсчёта строк
+            Int32 lineLength = 0;
             ConsoleKeyInfo keyPressed;
             Console.Clear();
             Console.WriteLine("Start typing... (ESC - exit; F2 - save)\n");
             do
             {
-                // str[0] = Convert.ToChar(pr.stringCounter);
                 keyPressed = Console.ReadKey();
 
                 if (keyPressed.Key == ConsoleKey.Enter)
                 {
                     Console.Write((char)10);
                     str += '\n';
-                    pr.counterStrings++;
-                    int left = Console.CursorLeft;
-                    int top = Console.CursorTop;
-                    Console.CursorLeft = 80;
-                    Console.CursorTop = 1;
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write($"Strings : [{pr.counterStrings}]");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.CursorLeft = left;
-                    Console.CursorTop = top;
+                }
+                else if (lineLength % 40 == 0)
+                {
+                    lineLength = 0;
+                    Console.Write((char)10);
+                    str += '\n';
                 }
                 else if (keyPressed.Key == ConsoleKey.F2)
                 {
@@ -69,9 +68,8 @@ namespace Events
                     continue;
                 }
                 else str += keyPressed.KeyChar;
-
+                lineLength += 1;
                 NewChar?.Invoke(str);
-                // if (NewChar != null) NewChar(str);
             } while (keyPressed.Key != ConsoleKey.Escape);
         }
     }
@@ -87,7 +85,7 @@ namespace Events
             if (str.Equals("OK")) PrintSymbol('+');
             else PrintSymbol('x');
         };
-
+        
         private static void PrintSymbol(char symb)
         {
             int left = Console.CursorLeft;
@@ -104,17 +102,11 @@ namespace Events
 
     class LengthModule
     {
-        
-
         public EventListener OnNewChar = str =>
         {
             int left = Console.CursorLeft;
             int top = Console.CursorTop;
-            if (str.Length % 40 == 0)
-            {
-                Console.Write((char)10);
-                str += '\n';
-            }
+
             Console.CursorLeft = 45;
             Console.CursorTop = 1;
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -211,9 +203,19 @@ namespace Events
 
     class CounterStrings
     {
-        private int stringCounter = 0;
-        public EventListener counter = str =>
+        public EventListener Counter = str =>
         {
+            MatchCollection matches = Regex.Matches(str, "\n");
+            Int32 lines = matches.Count + 1;
+            int left = Console.CursorLeft;
+            int top = Console.CursorTop;
+            Console.CursorLeft = 45;
+            Console.CursorTop = 0;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"Strings: ({lines})");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.CursorLeft = left;
+            Console.CursorTop = top;
         };
     }
 
@@ -236,4 +238,5 @@ namespace Events
             Console.CursorTop = top;
         }
     }
+
 }
