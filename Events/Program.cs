@@ -53,10 +53,11 @@ namespace Events
 
                 if (keyPressed.Key == ConsoleKey.Enter)
                 {
+                    lineLength = 0;
                     Console.Write((char)10);
                     str += '\n';
                 }
-                else if (lineLength % 40 == 0)
+                else if (lineLength % 40 == 0 && str.Length > 0)
                 {
                     lineLength = 0;
                     Console.Write((char)10);
