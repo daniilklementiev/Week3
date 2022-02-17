@@ -21,11 +21,12 @@ namespace Events
             var savedTimeModule = new SavedTimeModule();
             var restrictedModule = new CheckerModule();
             var counterStrings = new CounterStrings();
+            var counterWords = new CounterWords();
 
             editModule.NewChar += changeModule.OnNewChar;
             editModule.NewChar += lengthModule.OnNewChar;
             editModule.NewChar += restrictedModule.OnNewChar;
-            editModule.NewChar += CounterWords.Counter;
+            editModule.NewChar += counterWords.Counter;
             editModule.NewChar += counterStrings.Counter;
 
             saveModule.SaveText += changeModule.OnSaved;
@@ -50,14 +51,13 @@ namespace Events
             do
             {
                 keyPressed = Console.ReadKey();
-
                 if (keyPressed.Key == ConsoleKey.Enter)
                 {
                     lineLength = 0;
                     Console.Write((char)10);
                     str += '\n';
                 }
-                else if (lineLength % 40 == 0 && str.Length > 0)
+                else if (lineLength % 100 == 0 && str.Length > 0)
                 {
                     lineLength = 0;
                     Console.Write((char)10);
@@ -222,12 +222,17 @@ namespace Events
 
     class CounterWords
     {
-        private static String[] strMass;
-        private static int counter = 0;
-        public static void Counter(String str)
+        public void Counter(String str)
         {
-            strMass = str.Split(new char[] { ' ', ',' });
-            counter = strMass.Length;
+            int counter = 0;
+            var strTemp = str.Split(new char[] {' ', ',', '.'});
+            foreach (var word in strTemp)
+            {
+                if(!String.IsNullOrEmpty(word) && word != "," && word != ".")
+                {
+                    counter++;
+                }
+            }
             int left = Console.CursorLeft;
             int top = Console.CursorTop;
             Console.CursorLeft = 65;
