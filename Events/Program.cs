@@ -43,7 +43,7 @@ namespace Events
         public void Type()
         {
             String str = String.Empty;
-            MatchCollection lines = Regex.Matches(str, "\n"); // регулярное выражение для подсчёта строк
+            // MatchCollection lines = Regex.Matches(str, "\n"); // регулярное выражение для подсчёта строк
             Int32 lineLength = 0;
             ConsoleKeyInfo keyPressed;
             Console.Clear();
@@ -184,8 +184,6 @@ namespace Events
                     }
                 } while (index >= 0);
             }
-            //index = str.IndexOf("bomb", index + 1);
-
 
             if (bombCounter > 0)
             {
@@ -244,5 +242,4 @@ namespace Events
             Console.CursorTop = top;
         }
     }
-
 }
