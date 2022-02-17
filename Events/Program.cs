@@ -199,7 +199,6 @@ namespace Events
             }
         }
     }
-
     class CounterStrings
     {
         public EventListener Counter = str =>
@@ -217,7 +216,6 @@ namespace Events
             Console.CursorTop = top;
         };
     }
-
     class CounterWords
     {
         public void Counter(String str)
