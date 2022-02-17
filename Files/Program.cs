@@ -10,11 +10,18 @@ namespace Files
         static void Main(string[] args)
         {
             Console.WriteLine("Hello Files!");
-            using (StreamWriter writer = new StreamWriter(Filename))
+            try
             {
-                writer.WriteLine("Hello Files w/ Using() {}!");
+                using (StreamWriter writer = new StreamWriter(Filename))
+                {
+                    writer.WriteLine("Hello Files w/ Using() {}!");
 
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
+            
             Console.WriteLine("Done");
         }
     }
