@@ -17,20 +17,58 @@ namespace Files
             if (binIndex == -1) return null;
             return exePath.Substring(0, binIndex);
         }
-        
+
+        private static void GetFilePath(String fileName)
+        {
+            String searchable = '*' + fileName + '*'; // форматирование имени для поиска по фрагменту
+            String[] allFoundFiles = Directory.GetFiles(@"C:\Users\user\source\repos\Week3\", searchable, SearchOption.AllDirectories); // массив путей
+            if(allFoundFiles.Length > 0) // условие если существует хоть один путь
+            {
+                Console.WriteLine("Результаты поиска файла с таким именем: ");
+                foreach (string file in allFoundFiles)
+                {
+                    Console.WriteLine(file);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Файл с таким именем не найден");
+            }
+            
+        }
+
         static void Main(string[] args)
         {
-            String filename = GetProjectRoot() + @"\TextFile1.txt";
-            try
+            // String filename = GetProjectRoot() + @"\sicker.txt\";
+
+            Console.WriteLine("Поиск файла в директориях!");
+            Console.Write("Введите имя файла: ");
+            String searchableFile = Console.ReadLine();
+            GetFilePath(searchableFile);
+            Console.WriteLine("Желаете открыть файла? (y/n) : ");
+            String choice = Console.ReadLine();
+            if(choice == "y")
             {
-                using (StreamReader sr = new StreamReader(filename))
+                Console.WriteLine("Введите путь желаемого файла : ");
+                String path = Console.ReadLine();
+                try
                 {
-                    Console.WriteLine(sr.ReadToEnd());
+                    Console.WriteLine("Содержимое: ");
+                    using (StreamReader sr = new StreamReader(path))
+                    {
+                        Console.WriteLine(sr.ReadToEnd());
+                    }
                 }
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
+            else
+            {
+                Console.WriteLine("Спасибо что доверяете нам. ");
+            }
+            
             
             
             
